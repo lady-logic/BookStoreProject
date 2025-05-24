@@ -31,18 +31,19 @@ Dieses Projekt dient Lernzwecken. Es zeigt, wie man:
 ## 🔧 Projektstruktur
 
 ```bash
-BookStoreApi/
-├── Controllers/
-│   ├── AccountController.cs
-│   └── BooksController.cs
-├── Attributes/
-│   ├── CustomRoleAttribute.cs
-│   └── LogActionFilter.cs
-├── Models/
-│   ├── BookModel.cs
-│   ├── LoginModel.cs
-│   └── RegisterModel.cs
-└── Program.cs
+BookStoreProject/
+│
+├── BookStoreApi/                 → Haupt-API-Projekt
+│   ├── Controllers/              → API-Controller für Bücher und Kategorien
+│   ├── Models/                   → Entitäten und DTOs
+│   ├── Attributes/               → Eigene C#-Attribute
+│   ├── Filters/                  → Action- und Authorization-Filter
+│   ├── Middleware/               → Middleware-Komponenten
+│   ├── Program.cs                → Einstiegspunkt
+│   └── appsettings.json          → Konfiguration
+│
+└── BookStoreApiTests/            → Testprojekt
+    └── Integrationstests
 ```
 
 ## 🔑 Authentifizierung (JWT)
