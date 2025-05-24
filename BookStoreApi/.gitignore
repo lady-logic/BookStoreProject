@@ -1,0 +1,58 @@
+# Build Ergebnisse
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider-Projektdateien
+.idea/
+*.sln.iml
+
+# VS-spezifisch
+.vs/
+.vscode/
+
+# Logs
+*.log
+
+# User-spezifische Dateien
+*.userprefs
+*.csproj.user
+
+# Temp-Dateien
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Docker
+**/Dockerfile.*
+docker-compose.*
+
+# Paketverwaltungsordner
+packages/
+.nuget/
+
+# dotnet CLI
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Distribution
+publish/
+wwwroot/
+
+# Secrets (falls du UserSecrets verwendest)
+secrets.json
+
+# System-spezifisch
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# JetBrains Rider Cache
+.idea/
+*.sln.iml
