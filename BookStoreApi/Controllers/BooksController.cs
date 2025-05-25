@@ -11,6 +11,7 @@ namespace BookStoreApi.Controllers;
 public class BooksController : ControllerBase
 {
     private static List<BookModel> _books = new();
+    private static readonly object _lockObject = new();
 
     [HttpGet]
     public IActionResult GetAllBooks() => Ok(_books);
@@ -26,8 +27,12 @@ public class BooksController : ControllerBase
     [CustomRole("Admin")]
     public IActionResult AddBook([FromBody] BookModel book)
     {
-        book.Id = _books.Count + 1;
-        _books.Add(book);
+        lock (_lockObject)
+        {
+            book.Id = _books.Count + 1;
+            _books.Add(book);
+        }
+            
         return CreatedAtAction(nameof(GetBook), new { id = book.Id }, book);
     }
 
@@ -35,21 +40,27 @@ public class BooksController : ControllerBase
     [CustomRole("Admin")]
     public IActionResult UpdateBook(int id, [FromBody] BookModel updated)
     {
-        var book = _books.FirstOrDefault(b => b.Id == id);
-        if (book == null) return NotFound();
-        book.Title = updated.Title;
-        book.Author = updated.Author;
-        book.Pages = updated.Pages;
-        return Ok(book);
+        lock (_lockObject)
+        {
+            var book = _books.FirstOrDefault(b => b.Id == id);
+            if (book == null) return NotFound();
+            book.Title = updated.Title;
+            book.Author = updated.Author;
+            book.Pages = updated.Pages;
+            return Ok(book);
+        }
     }
 
     [HttpDelete("{id}")]
     [CustomRole("Admin")]
     public IActionResult DeleteBook(int id)
     {
-        var book = _books.FirstOrDefault(b => b.Id == id);
-        if (book == null) return NotFound();
-        _books.Remove(book);
-        return NoContent();
+        lock (_lockObject)
+        {
+            var book = _books.FirstOrDefault(b => b.Id == id);
+            if (book == null) return NotFound();
+            _books.Remove(book);
+            return NoContent();
+        }
     }
 }
